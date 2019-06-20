@@ -10,7 +10,7 @@
  * So far, ActiveDom, JEI (JavaScript Event Interface) and a basic 
  * select class have been added
  */
-export {ActiveDom}         from './dom/activedom.mjs'
-export {EventInterface}    from './dom/eventinterface.mjs'
-export {SelectorInterface} from './dom/selectorinterface.mjs'
-export {Shadow}            from './dom/shadow.mjs'
+export {ActiveDom}         from './dom/activedom.js'
+export {EventInterface}    from './dom/eventinterface.js'
+export {SelectorInterface} from './dom/selectorinterface.js'
+export {Shadow}            from './dom/shadow.js'
