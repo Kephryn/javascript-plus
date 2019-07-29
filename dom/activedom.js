@@ -132,6 +132,10 @@ export class ActiveDom {
 					this.setEvents(element, attribute);
 				}
 				else if(property === 'class' || property === 'className') {
+					if(attribute instanceof Array) {
+						attribute = attribute.join(' ')
+					}
+
 					if(this.namespace === 'http://www.w3.org/1999/xhtml') {
 						element.className = attribute;
 					}
