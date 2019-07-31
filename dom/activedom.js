@@ -376,10 +376,10 @@ export class ActiveDom {
 				case null:
 					break;
 				case 'string':
+				case 'number':
 					element.innerHTML += arguments[1][index];
 					// element.appendChild(document.createTextNode(arguments[1][index]));
 					break;
-
 				case 'html':
 				case 'svg':
 				default:
@@ -403,6 +403,10 @@ export class ActiveDom {
 		return context.apply({}, [function(node) {
 			let args = Array.prototype.slice.call(arguments);
 			args.shift();
+
+			if(typeof node !== 'string') {
+				throw new Error('First argument must be a string')
+			}
 
 			if(!self[node.toUpperCase()]) {
 				throw new Error('The node doesn\'t exist ' + node);
