@@ -352,7 +352,7 @@ export class ActiveDom {
 		/* Assign Attributes */
 		let i = 0, firstArgument = arguments[1][0];
 
-		if(!(firstArgument instanceof Node) && typeof(firstArgument) === 'object') {
+		if(!(firstArgument instanceof Node) && !(firstArgument instanceof Array) && typeof(firstArgument) === 'object') {
 			i++;
 			element = this.set(element, firstArgument);
 		}
