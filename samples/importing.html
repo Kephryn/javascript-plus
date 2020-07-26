@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <title>ActiveDom Sample</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body>
+        <script type="module">
+            import {
+                AssetLoader
+            } from '../js+.js';
+            
+            const assets = {
+                audio: 'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Howie_Long_Scream.ogg',
+                html: './sample.html',
+                img: 'https://i.imgur.com/Y02KtSZ.jpg',
+                json: 'https://solomid-resources.s3.amazonaws.com/blitz/tft/data/classes.json',
+                txt: './sample.txt',
+            }
+
+            const loader = new AssetLoader();
+
+            loader.load(assets.json).then(json => {
+                for(let prop in json) {
+                    console.log(prop)
+                }
+                console.log(json)
+            })
+
+            loader.load(assets.img).then(img => {
+                document.body.appendChild(img)
+            })
+
+            // loader.load(assets.html).then(html => {
+            //     console.log(html)
+            // })
+            
+        </script>
+    </body>
+</html>
+    

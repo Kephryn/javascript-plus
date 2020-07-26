@@ -60,7 +60,7 @@ export class EventInterface {
     /*!
 		CHANGELOG
 		0.3.0
-			- Imported project to JS+ 
+			- Imported project to JS+
 		0.2.0
 			- Added Object.observe
 		0.1.1
@@ -196,6 +196,7 @@ export class EventInterface {
 			volumechange: EventInterface.media,
 			waiting: EventInterface.media
 		}
+
         if(!invasive) {
 			console.warn('Whoa, being invasive is the point.')
 			console.log('It\'s a good point. This should work without DOM/ES alteration')
@@ -217,7 +218,7 @@ export class EventInterface {
 				}, arguments);
 			};
 		});
-		
+
 
 		return obj => {
 			this.target = obj
@@ -595,7 +596,6 @@ class EventNamespace {
 	}
 
 	matches(namespace) {
-
 		if(namespace instanceof EventNamespace) {
 			namespace = namespace.full
 		}

@@ -6,12 +6,32 @@
  * @version 0.1.0
  */
 export class ActiveDom {
-	
+
 	/**
 	 * @param  {string} namespace=document.documentElement.namespaceURI
 	 * @param  {boolean} invasive=false - Flag for wether or not to invade the DOM by setting a prototype on Element
 	 */
 	constructor(namespace = document.documentElement.namespaceURI, invasive = false) {
+		/**
+		 * The namespace argument is wrong here, html5 will always default to xhtml
+		 * as well as the html5 namespace will not render properly.
+		 *
+		 * The solution to this is to use HTML5 as defaultor fallback the doctype of
+		 * the document if not HTML5
+		 *
+		 * Oldschool doctypes
+			<!DOCTYPE html
+			PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+			<!DOCTYPE html
+			PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+			<!DOCTYPE html
+			PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
+			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+		 */
 		let self = this;
 		this.version = '3.0.0';
 		this.namespace;
@@ -37,15 +57,15 @@ export class ActiveDom {
 			},
 			mathml: {
 				'http://www.w3.org/1998/Math/MathML': [
-					// Top-level elementsSection 
+					// Top-level elementsSection
 					'math',
-					// Token elementsSection 
+					// Token elementsSection
 					'mglyph', 'mi', 'mn', 'mo', 'ms', 'mspace', 'mtext',
 					// General layoutSection
 					'menclose', 'merror', 'mfenced', 'mfrac', 'mpadded', 'mphantom', 'mroot', 'mrow', 'msqrt', 'mstyle',
 					// Script and limit elementsSection
 					'mmultiscripts', 'mover', 'mprescripts', 'msub', 'msubsup', 'msup', 'munder', 'munderover', 'none',
-					// Tabular mathSection 
+					// Tabular mathSection
 					'maligngroup', 'malignmark', 'mlabeledtr', 'mtable', 'mtd', 'mtr',
 					// Elementary mathSection
 					'mlongdiv', 'mscarries', 'mscarry', 'msgroup', 'msline', 'msrow', 'mstack',
@@ -116,10 +136,15 @@ export class ActiveDom {
 	 * @param {Array} attributes
 	 */
 	set(element, attributes) {
+
+		// Loop through all of the properties
 		for(let property in attributes) {
+
+			// Ensure that they are not prototype or inherited
 			if(attributes.hasOwnProperty(property)) {
 				var attribute = attributes[property];
 
+				// Check for style[s]
 				if(property === 'style' || property === 'styles') {
 					if(typeof attribute === 'string') {
 						element.style.cssText = attribute;
@@ -128,9 +153,12 @@ export class ActiveDom {
 						this.setStyles(element, attribute);
 					}
 				}
+				// Check for event[s]
 				else if(property === 'event' || property === 'events') {
 					this.setEvents(element, attribute);
 				}
+				// Check for class or className
+				// Accecpts array
 				else if(property === 'class' || property === 'className') {
 					if(attribute instanceof Array) {
 						attribute = attribute.join(' ')
@@ -143,18 +171,23 @@ export class ActiveDom {
 						element.setAttribute('class', attribute);
 					}
 				}
+				// Check for data or dataset
 				else if(property === 'data' || property === 'dataset') {
 					this.setDatasets(element, attribute);
 				}
+				// Set the text content to the element
 				else if(property === 'text') {
 					element.textContent = attribute;
 				}
+				// Set the markup to the element
 				else if(property === 'html' || property === 'markup') {
 					this.setMarkup(element, attribute);
 				}
+				// Append the markup to the element
 				else if(property === 'append') {
 					this.setMarkup(element, attribute, true);
 				}
+				// Create ele
 				else if(property.indexOf(':') !== -1) {
 					var nsProp = property.split(':');
 

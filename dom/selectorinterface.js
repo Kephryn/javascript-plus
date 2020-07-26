@@ -88,3 +88,12 @@ function createNodeList(collection) {
 
     return Object.create(nodelist, properties); // return an object pretending to be a NodeList
 }
+
+var si = new SelectorInterface;
+
+Node.prototype.get = get;
+NodeList.prototype.get = get;
+
+function get(selector) {
+    return si.call(this, selector)
+}

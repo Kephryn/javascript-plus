@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <title>ActiveDom Sample</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body>
+        <script type="module">
+            import {
+                ActiveDom,
+                EventInterface,
+                SelectorInterface,
+                Shadow
+            } from '../js+.js';
+
+            const dom = new ActiveDom('http://www.w3.org/1999/xhtml', true);
+
+            const sample = dom.render(html => 
+                html('div', {class: ['header', 'here-we-can-test-new-features-too']}, 
+                    html('h1', {
+                            style: {
+                                color: 'red'
+                            },
+                            class: 'page-header'
+                        },
+                        'This is a sample',
+                    ),
+                    html('p', 'Of things that can be build using active dom.')
+                )
+            );
+
+            // This does a simple appending of rendered content
+            document.body.appendChild(sample);
+
+            // If ActiveDom is invasive it creates a prototype set of Element
+            document.body.set({
+                class: 'the-body',
+                style: {
+                    'backgroundColor': '#ddd',
+                },
+                append: 'the Element.set() method is magical'
+            })
+        </script>
+    </body>
+</html>
+    
